@@ -32,7 +32,7 @@ int main() {
 	while (1) {
 
 		int hour = 0;
-		printf("\n働いた時間 :");
+		printf("\n働いた時間(-1 で終了) :");
 		scanf_s("%d", &hour);
 
 		if (hour == -1) {
