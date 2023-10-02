@@ -1,13 +1,33 @@
 #include <stdio.h>
 
 
+template<typename Ty>
+Ty Min(Ty a, Ty b) {
+	return a < b ? a : b;
+}
+
+template<>
+char Min<char>(char a, char b) {
+	printf("æ•°å­—ä»¥å¤–ã¯ä»£å…¥ã§ãã¾ã›ã‚“\n");
+	return '\0';
+}
+
 
 int main() {
 
 
+	int a = 10, b = 30;
+	float c = 2.4f, d = 3.5f;
+	double e = 28.78, f = 28.51;
+	char g = '1', h = '2';
 
-	printf_s("ƒL[‚ğ‰Ÿ‚µ‚ÄI—¹\n->");
-	getchar();
+
+	printf("äºŒã¤ã®å€¤ã®Minã‚’å–å¾—\n\n");
+
+	printf("int	 %d %d		: %d\n", a, b, Min(a, b));
+	printf("float	 %.2f %.2f	: %.2f\n", c, d, Min(c, d));
+	printf("double %.2lf %.2lf: %.2lf\n", e, f, Min(e, f));
+	printf("char	 %c %c		: %c\n", g, h, Min(g, h));
 
 	return 0;
 }
