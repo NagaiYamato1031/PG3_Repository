@@ -27,7 +27,7 @@ int main() {
 	printf("int	 %d %d		: %d\n", a, b, Min(a, b));
 	printf("float	 %.2f %.2f	: %.2f\n", c, d, Min(c, d));
 	printf("double %.2lf %.2lf: %.2lf\n", e, f, Min(e, f));
-	printf("char	 %c %c		: %c\n", g, h, Min(g, h));
+	Min(g, h);
 
 	return 0;
 }
