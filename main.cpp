@@ -8,7 +8,7 @@ typedef void (*pFunc)(int);
 // 丁半を返す
 void CheckGambling(int num) {
 	int rnd = rand() % 2;
-	printf("さぁ果たしてあっているのか...？\n");
+	printf("さぁ果たしてあっているのか...？\@n");
 	Sleep(3 * 1000);
 	if (rnd == num) {
 		printf("正解！さすがです！！！\n\n");
