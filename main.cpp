@@ -2,15 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <Windows.h>
+#include <functional>
 
 typedef void (*pFunc)(int);
 
 // 丁半を返す
 void CheckGambling(int num) {
-	int rnd = rand() % 2;
-	printf("さぁ果たしてあっているのか...？\@n");
+	std::function<bool(int)> check = [](int i) {return rand() % 2 == i; };
+
+	printf("さぁ果たしてあっているのか...？\n");
 	Sleep(3 * 1000);
-	if (rnd == num) {
+	
+	if (check(num)) {
 		printf("正解！さすがです！！！\n\n");
 	}
 	else {
@@ -21,8 +24,8 @@ void CheckGambling(int num) {
 void DiceGame(pFunc p) {
 	printf("0 : 丁, 1 : 半\n->");
 
-	int num = 0;
-	scanf_s("%d", &num);
+	std::function<int()> scan = []() {int num = 0; scanf_s("%d", &num); return num; };
+	int num = scan();
 
 	p(num);
 }
