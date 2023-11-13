@@ -10,24 +10,27 @@ typedef void (*pFunc)(int);
 void CheckGambling(int num) {
 	std::function<bool(int)> check = [](int i) {return rand() % 2 == i; };
 
-	printf("さぁ果たしてあっているのか...？\n");
-	Sleep(3 * 1000);
-	
+	std::function<void(int)> SetTimeOut = [](int time) {
+		printf("さぁ果たしてあっているのか...？\n");
+		Sleep(time * 1000);
+	};
+
+	SetTimeOut(3);
+
 	if (check(num)) {
 		printf("正解！さすがです！！！\n\n");
 	}
 	else {
 		printf("不正解！残念...\n\n");
 	}
+
 }
 
 void DiceGame(pFunc p) {
 	printf("0 : 丁, 1 : 半\n->");
 
 	std::function<int()> scan = []() {int num = 0; scanf_s("%d", &num); return num; };
-	int num = scan();
-
-	p(num);
+	p(scan());
 }
 
 int main() {
