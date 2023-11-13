@@ -15,7 +15,9 @@ private:
 
 	void BeingOut();
 
-	void (Enemy::*pFunc)();
+	void (Enemy::*pFunc[3])();
+
+	int funcNo_ = 0;
 
 };
 
