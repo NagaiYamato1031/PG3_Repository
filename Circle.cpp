@@ -10,5 +10,5 @@ void Circle::Size()
 void Circle::Draw()
 {
 	printf("半径 : %.2f\n", radius_);
-	printf("面積 : %.2f\n", size_);
+	printf("面積 : %.2f\n\n", size_);
 }

@@ -9,7 +9,7 @@ public:
 	IShape() : size_(0) {}
 
 	virtual void Size() = 0;
-	virtual void Draw();
+	virtual void Draw() = 0;
 
 };
 
