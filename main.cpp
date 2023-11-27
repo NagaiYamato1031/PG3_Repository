@@ -4,18 +4,19 @@
 #include <Windows.h>
 #include <functional>
 
-typedef bool (*pFunc)(int);
+typedef void (*pFunc)(int);
+
+void SetTimeout(int sleepTime) {
+	Sleep(sleepTime * 1000);
+}
 
 // 丁半を返す
-bool CheckGambling(int num) {
+bool CheckGambling(pFunc p, int num) {
 	std::function<bool(int)> check = [](int i) {return rand() % 2 == i; };
 
-	std::function<void(int)> SetTimeOut = [](int time) {
-		printf("さぁ果たしてあっているのか...？\n");
-		Sleep(time * 1000);
-	};
+	printf("さぁ果たしてあっているのか...?\n");
 
-	SetTimeOut(3);
+	p(3);
 
 	if (check(num)) {
 		printf("正解！さすがです！！！\n\n");
@@ -28,18 +29,18 @@ bool CheckGambling(int num) {
 
 }
 
-void DiceGame(pFunc p) {
+void DiceGame() {
 	std::function<int()> scan = []() {int num = 0; scanf_s("%d", &num); return num; };
+	pFunc p = SetTimeout;
 	do {
 		printf("0 : 丁, 1 : 半\n->");
-	} while (!p(scan()));
+	} while (!CheckGambling(p, scan()));
 }
 
 int main() {
 	srand(time(nullptr));
 
-	pFunc p = CheckGambling;
-	DiceGame(p);
+	DiceGame();
 
 	return 0;
 }
