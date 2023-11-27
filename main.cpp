@@ -3,13 +3,20 @@
 #include <time.h>
 #include <Windows.h>
 
-typedef void (*pFunc)(int, int);
+typedef void (*pFunc)(int);
+
+void SetTimeout(int sleepTime) {
+	Sleep(sleepTime * 1000);
+	Sleep(sleepTime);
+}
 
 // 丁半を返す
-void CheckGambling(int num, int sleepTime) {
+void CheckGambling(pFunc p, int num) {
 	int rnd = rand() % 2;
 	printf("さぁ果たしてあっているのか...？\n");
-	Sleep(sleepTime);
+
+	p(3);
+
 	if (rnd == num) {
 		printf("正解！さすがです！！！\n\n");
 	}
@@ -18,20 +25,20 @@ void CheckGambling(int num, int sleepTime) {
 	}
 }
 
-void DiceGame(pFunc p) {
+void DiceGame() {
 	printf("0 : 丁, 1 : 半\n->");
 
 	int num = 0;
 	scanf_s("%d", &num);
 
-	p(num, 3000);
+	pFunc p = SetTimeout;
+	CheckGambling(p, num);
 }
 
 int main() {
 	srand(time(nullptr));
 
-	pFunc p = CheckGambling;
-	DiceGame(p);
+	DiceGame();
 
 	return 0;
 }
