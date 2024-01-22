@@ -1,21 +1,47 @@
 #include <stdio.h>
-#include <functional>
 #include <thread>
+#include <queue>
+#include <condition_variable>
+#include <mutex>
 
 int main()
 {
-	std::function<void(int)> PrintNum = [](int num) {
-		printf("thread %d\n", num);
-	};
+	std::mutex mutex;
+	std::condition_variable condition;
+	std::queue<int> q;
+	bool exit = false;
 
-	std::thread th1(PrintNum, 1);
-	th1.join();
-	
-	std::thread th2(PrintNum, 2);
-	th2.join();
+	std::thread th([&]() {
+		std::unique_lock<std::mutex> uniqueLock(mutex);
+		while (!exit)
+		{
+			if (q.empty())
+			{
+				condition.wait(uniqueLock);
+			}
+			else
+			{
+				q.pop();
+				std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+			}
+		}
+		});
 
-	std::thread th3(PrintNum, 3);
-	th3.join();
+	while (true)
+	{
+		char c = getchar();
+		if (c == '1')
+		{
+			q.push(2);
+			condition.notify_all();
+		}
+		else if(c == '0')
+		{
+			break;
+		}
+	}
+	exit = true;
+	th.join();
 
 	return 0;
 }
