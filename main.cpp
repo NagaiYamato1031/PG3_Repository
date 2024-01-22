@@ -4,6 +4,8 @@
 #include <condition_variable>
 #include <mutex>
 
+#include <functional>
+
 #include <sstream>
 #include <fstream>
 #include <string>
@@ -48,21 +50,25 @@ void GetCSVFile(std::array<std::array<int, MAP_SIZE>, MAP_SIZE>& data_)
 
 int main()
 {
+	std::array<std::array<int, MAP_SIZE>, MAP_SIZE> mapData_{ 0 };
+
+	std::function<void(void)> PrintMap = [&mapData_](){
+		for (size_t i = 0; i < MAP_SIZE; i++)
+		{
+			for (size_t j = 0; j < MAP_SIZE; j++)
+			{
+				printf(" %d", mapData_[i][j]);
+			}
+			printf("\n");
+		}
+	};
 
 	std::mutex mutex;
 	std::condition_variable condition;
 	bool exit = false;
 
-	std::array<std::array<int, MAP_SIZE>, MAP_SIZE> mapData_{ 0 };
+	PrintMap();
 
-	for (size_t i = 0; i < MAP_SIZE; i++)
-	{
-		for (size_t j = 0; j < MAP_SIZE; j++)
-		{
-			printf(" %d", mapData_[i][j]);
-		}
-		printf("\n");
-	}
 	std::thread th([&]() {
 		std::unique_lock<std::mutex> uniqueLock(mutex);
 		while (!exit)
@@ -72,14 +78,7 @@ int main()
 			GetCSVFile(mapData_);
 			system("cls");
 
-			for (size_t i = 0; i < MAP_SIZE; i++)
-			{
-				for (size_t j = 0; j < MAP_SIZE; j++)
-				{
-					printf(" %d", mapData_[i][j]);
-				}
-				printf("\n");
-			}
+			PrintMap();
 		}
 		});
 
