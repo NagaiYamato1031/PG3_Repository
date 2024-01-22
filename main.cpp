@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <algorithm>
 #include <string>
-#include <list>
+#include <vector>
+#include <sstream>
 
-using StringList = std::list<const char*>;
+using StringList = std::vector<std::string>;
 
 int main()
 {
@@ -40,35 +41,9 @@ int main()
 		"k022g0001@g.neec.ac.jp"
 	};
 
-	char* temp = reinterpret_cast<char*>(std::malloc((size_t)8));
-	std::sort(arrayList_.begin(), arrayList_.end(), [temp](const char* str1, const char* str2) {
-		// 数字を読み取って比較
-		int number[2][2];
-		// 一つ目
-		std::strncpy(temp, str1 + 1, 3);
-		number[0][0] = std::atoi(temp);
-		// 二つ目
-		std::strncpy(temp, str1 + 5, 4);
-		number[0][1] = std::atoi(temp);
-		
-		// 一つ目
-		std::strncpy(temp, str2 + 1, 3);
-		number[1][0] = std::atoi(temp);
-		// 二つ目
-		std::strncpy(temp, str2 + 5, 4);
-		number[1][1] = std::atoi(temp);
-
-		if (number[0][0] == number[1][0])
-		{
-			return number[1][0] < number[1][1];
-		}
-		else
-		{
-			return number[0][0] < number[0][1];
-		}
-		});
-
-	std::for_each(std::begin(arrayList_), std::end(arrayList_), [](const char* s) {printf("%s\n", s); });
+	std::sort(arrayList_.begin(), arrayList_.end());
+	
+	std::for_each(std::begin(arrayList_), std::end(arrayList_), [](const std::string& s) {printf("%s\n", s.c_str()); });
 
 	return 0;
 }
