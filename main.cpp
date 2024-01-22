@@ -6,22 +6,27 @@
 typedef void (*pFunc)(int);
 
 void SetTimeout(int sleepTime) {
-	Sleep(sleepTime * 1000);
-	Sleep(sleepTime);
+	int sleepDivision = sleepTime * 1000 / 4;
+	Sleep(sleepDivision);
+	printf(".");
+	Sleep(sleepDivision);
+	printf(".");
+	Sleep(sleepDivision);
+	printf(".\n");
+	Sleep(sleepDivision);
 }
 
 // 丁半を返す
 void CheckGambling(pFunc p, int num) {
 	int rnd = rand() % 2;
-	printf("さぁ果たしてあっているのか...？\n");
 
 	p(3);
 
 	if (rnd == num) {
-		printf("正解！さすがです！！！\n\n");
+		printf("正解\n\n");
 	}
 	else {
-		printf("不正解！残念...\n\n");
+		printf("不正解\n\n");
 	}
 }
 
