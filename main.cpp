@@ -6,24 +6,30 @@
 
 typedef void (*pFunc)(int);
 
-void SetTimeout(int sleepTime) {
-	Sleep(sleepTime * 1000);
+void SetTimeout(int sleepTime)
+{
+	int sleepDivision = sleepTime * 1000 / 4;
+	Sleep(sleepDivision);
+	printf(".");
+	Sleep(sleepDivision);
+	printf(".");
+	Sleep(sleepDivision);
+	printf(".\n");
+	Sleep(sleepDivision);
 }
 
 // 丁半を返す
 bool CheckGambling(pFunc p, int num) {
 	std::function<bool(int)> check = [](int i) {return rand() % 2 == i; };
 
-	printf("さぁ果たしてあっているのか...?\n");
-
 	p(3);
 
 	if (check(num)) {
-		printf("正解！さすがです！！！\n\n");
+		printf("正解\n\n");
 		return true;
 	}
 	else {
-		printf("不正解！残念...\n\n");
+		printf("不正解\n\n");
 		return false;
 	}
 
